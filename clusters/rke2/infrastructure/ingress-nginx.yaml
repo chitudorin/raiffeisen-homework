@@ -19,6 +19,7 @@ metadata:
   name: ingress-nginx
   namespace: ingress-nginx
 spec:
+  interval: 10m
   chart:
     spec:
       chart: ingress-nginx
