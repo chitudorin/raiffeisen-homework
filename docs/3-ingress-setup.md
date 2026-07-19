@@ -10,5 +10,5 @@ I'll store the nginx-ingress stuff under `infrastructure` so I pointed flux-syst
 
 Included `ingress-nginx` namespace creation, the [Helm repo](https://kubernetes.github.io/ingress-nginx/deploy/#quick-start) definition and the HelmRelease itself. If it doesn't work, clearly FluxCD is at fault (and definitely not me not being able to read documentation).
 
-
+Already my first mistake, I referenced `../ingress-nginx` in the flux-system `kustomization.yaml` but it is already discovered only because it's under `clusters/rke2`. From now on I'll leave it as default and only create necessary directories (like `apps` under `cluster/rke2` so they're automatically discovered).
 
