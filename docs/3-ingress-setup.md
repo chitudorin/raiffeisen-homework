@@ -12,3 +12,23 @@ Included `ingress-nginx` namespace creation, the [Helm repo](https://kubernetes.
 
 Already my first mistake, I referenced `../ingress-nginx` in the flux-system `kustomization.yaml` but it is already discovered only because it's under `clusters/rke2`. From now on I'll leave it as default and only create necessary directories (like `apps` under `cluster/rke2` so they're automatically discovered).
 
+After fixing the issue the `nginx-ingress` controller is up:
+
+```
+dorin@rke2:~$ kubectl get pods --namespace=ingress-nginx
+NAME                                        READY   STATUS    RESTARTS   AGE
+ingress-nginx-controller-6c7cd85885-5km7k   1/1     Running   0          26s
+```
+
+`curl`ing also works (though it throws 404 because no routes are defined yet):
+
+```
+dorin@rke2:~$ curl localhost:80
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+```
