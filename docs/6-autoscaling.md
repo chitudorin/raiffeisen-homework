@@ -79,3 +79,16 @@ spec:
 ```
 
 Now this uses the default behaviour and it is kind of slow (or perhaps fast, depends on the application and load). It's fine for this purpose, but it's probably pretty important (same goes for KEDA).
+
+Turns out you can't just put 1000m limits on your Pods in a 4 CPU node where other stuff is running:
+
+```
+dorin@rke2:~$ kubectl describe pod -n loadtester loadtester-5d8777bfb7-prjnz
+[...]
+Events:
+  Type     Reason            Age    From               Message
+  ----     ------            ----   ----               -------
+  Warning  FailedScheduling  5m12s  default-scheduler  0/1 nodes are available: 1 Insufficient cpu. no new claims to deallocate, preemption: 0/1 nodes are available: 1 No preemption victims found for incoming pod.   
+```
+
+Turned down to 100m, this is probably enough to schedule pods.
