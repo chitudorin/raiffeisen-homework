@@ -23,7 +23,7 @@ spec:
       - name: loadtester
         image: ghcr.io/mirceanton/loadtester
         ports:
-        - containerPort: 80
+        - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -35,7 +35,7 @@ spec:
     app: loadtester
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 8080
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
