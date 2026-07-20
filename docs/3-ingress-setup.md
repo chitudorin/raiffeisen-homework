@@ -32,3 +32,28 @@ dorin@rke2:~$ curl localhost:80
 </body>
 </html>
 ```
+
+When setting up [cert-manager](3.1-cert-manager.md) I discovered that RKE2 already comes with ingress-nginx (and also metrics server) and it would actually precede my ingress-nginx, so technically the installation wasn't done. Now I disabled both of those prepackaged services:
+
+```
+dorin@rke2:~$ cat /etc/rancher/rke2/config.yaml 
+disable:
+  - rke2-ingress-nginx
+  - rke2-metrics-server
+```
+
+but now my controller isn't accesible anymore:
+
+```
+dorin@rke2:~$ curl localhost:80
+curl: (7) Failed to connect to localhost port 80 after 0 ms: Could not connect to server
+```
+
+With the default installation, on a bare metal setup, ingress-nginx [only exposes unprivileged ports (30000-32767) through NodePort](https://kubernetes.github.io/ingress-nginx/deploy/baremetal/#over-a-nodeport-service). This is not cool, you need to append the NodePort to each service you're accessing. I'll opt for the [hostNetwork solution](https://kubernetes.github.io/ingress-nginx/deploy/baremetal/#via-the-host-network) (solution that has a security warning, which I'll close my eyes and completely ignore for now; perhaps it's all fine for my usecase) and enable the option:
+
+```
+spec:
+  values:
+    controller:
+      hostNetwork: true
+```

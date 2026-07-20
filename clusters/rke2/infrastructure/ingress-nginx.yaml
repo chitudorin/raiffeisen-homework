@@ -30,5 +30,6 @@ spec:
           namespace: ingress-nginx
   values:
     controller:
+      hostNetwork: true
       extraArgs:
         default-ssl-certificate: ingress-nginx/wildcard-home-tls
