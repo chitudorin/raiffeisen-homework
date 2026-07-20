@@ -28,3 +28,7 @@ spec:
           kind: HelmRepository
           name: ingress-nginx
           namespace: ingress-nginx
+  values:
+    controller:
+      extraArgs:
+        default-ssl-certificate: ingress-nginx/wildcard-home-tls
