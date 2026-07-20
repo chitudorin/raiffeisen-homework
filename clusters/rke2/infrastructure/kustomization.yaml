@@ -4,3 +4,4 @@ resources:
  - ingress-nginx.yaml
  - cert-manager.yaml
  - certificates.yaml
+ - metrics-server.yaml
