@@ -1,0 +1,57 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: loadtester
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadtester
+  namespace: loadtester
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loadtester
+  template:
+    metadata:
+      labels:
+        app: loadtester
+    spec:
+      containers:
+      - name: loadtester
+        image: ghcr.io/mirceanton/loadtester
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadtester
+  namespace: loadtester
+spec:
+  selector:
+    app: loadtester
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loadtester
+  namespace: loadtester
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: loadtester.home.chitzu.ro
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: loadtester
+            port:
+              number: 80
