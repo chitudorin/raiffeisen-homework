@@ -16,3 +16,12 @@ jobs:
 ```
 
 That being said, I've only pushed directly on main so far so this wouldn't help because the validation happens *after* the push. Perhaps there's a workflow involving branches and PRs while still taking advantage of GitOps (maybe a separate cluster just for pre-merge applying stuff?), but for my usecase this was the easiest way. For this lint to work, I'll go ahead and enable Branch Protection on main and only use PRs from now on.
+
+I get some errors because of too long lines in `clusters/rke2/flux-system/gotk-components.yaml` so I'll ignore that in the `.yamllint` file:
+
+```
+extends: default
+
+ignore: |
+  **/gotk-components.yaml
+```
