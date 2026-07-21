@@ -20,13 +20,13 @@ spec:
         app: loadtester
     spec:
       containers:
-      - name: loadtester
-        image: ghcr.io/mirceanton/loadtester
-        ports:
-        - containerPort: 8080
-        resources:
-          limits:
-            cpu: "100m"
+        - name: loadtester
+          image: ghcr.io/mirceanton/loadtester
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: "100m"
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -36,12 +36,12 @@ metadata:
 spec:
   maxReplicas: 10
   metrics:
-  - resource:
-      name: cpu
-      target:
-        averageUtilization: 50
-        type: Utilization
-    type: Resource
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 50
+          type: Utilization
+      type: Resource
   minReplicas: 1
   scaleTargetRef:
     apiVersion: apps/v1
@@ -57,8 +57,8 @@ spec:
   selector:
     app: loadtester
   ports:
-  - port: 80
-    targetPort: 8080
+    - port: 80
+      targetPort: 8080
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -71,13 +71,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: loadtester.home.chitzu.ro
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: loadtester
-            port:
-              number: 80
+    - host: loadtester.home.chitzu.ro
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: loadtester
+                port:
+                  number: 80

@@ -25,9 +25,9 @@ spec:
       chart: ingress-nginx
       version: 4.15.1
       sourceRef:
-          kind: HelmRepository
-          name: ingress-nginx
-          namespace: ingress-nginx
+        kind: HelmRepository
+        name: ingress-nginx
+        namespace: ingress-nginx
   values:
     controller:
       hostNetwork: true

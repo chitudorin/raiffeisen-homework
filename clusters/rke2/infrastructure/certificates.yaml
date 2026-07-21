@@ -11,11 +11,11 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
-    - dns01:
-        cloudflare:
-          apiTokenSecretRef:
-            name: cloudflare-api-token-secret
-            key: api-token
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -28,5 +28,5 @@ spec:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - "*.home.chitzu.ro"
-  - "home.chitzu.ro"
+    - "*.home.chitzu.ro"
+    - "home.chitzu.ro"
