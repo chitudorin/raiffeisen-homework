@@ -92,3 +92,16 @@ Events:
 ```
 
 Turned down to 100m, this is probably enough to schedule pods.
+
+And yes, sure enough, after some requests spam I get more pods:
+
+```
+dorin@rke2:~$ kubectl -n loadtester get pods
+NAME                         READY   STATUS              RESTARTS   AGE
+loadtester-8b64b6dbd-4jprb   1/1     Running             0          99s
+loadtester-8b64b6dbd-dv8jc   0/1     ContainerCreating   0          2s
+loadtester-8b64b6dbd-q82xd   1/1     Running             0          32s
+loadtester-8b64b6dbd-qdzkb   0/1     ContainerCreating   0          2s
+```
+
+Now THIS is exciting, take that VPA.
